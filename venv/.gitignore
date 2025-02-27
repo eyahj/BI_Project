@@ -3,6 +3,8 @@
 # Ignore virtual environment
 venv/
 
+data/raw/
+data/processed/
 # Ignore unnecessary files
 __pycache__/
 *.log
