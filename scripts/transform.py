@@ -99,5 +99,30 @@ def clean_data():
     # Optionally, save the cleaned data
     customers.to_csv('data/processed/customers_cleaned.csv', index=False)
 
+# 2--- cleaning shipping data
+# Convert 'Ship_Date' to datetime
+    shipping['Ship_Date'] = pd.to_datetime(shipping['Ship_Date'], format='%d-%m-%Y', errors='coerce')
+
+        # Handle missing values
+    shipping = handle_missing_data(shipping, 'shipping')
+
+        # Validate 'Ship Mode' column
+    valid_ship_modes = ['First Class', 'Second Class', 'Standard Class', 'Same Day']
+    shipping['Ship_Mode'] = shipping['Ship_Mode'].apply(lambda x: x if x in valid_ship_modes else 'Unknown')
+
+        # Validate 'Delivery Days' (ensure non-negative)
+    shipping['Delivery_Days'] = pd.to_numeric(shipping['Delivery_Days'], errors='coerce')
+    shipping['Delivery_Days'] = shipping['Delivery_Days'].clip(lower=0)
+
+        # Validate 'Shipping Cost' (ensure non-negative)
+    shipping['Shipping_Cost'] = pd.to_numeric(shipping['Shipping_Cost'], errors='coerce')
+    shipping['Shipping_Cost'] = shipping['Shipping_Cost'].clip(lower=0)
+    shipping['Shipping_Cost_Category'] = pd.qcut(shipping['Shipping_Cost'], q=3, labels=['Low', 'Medium', 'High'])
+    #extract the shipping year month and day from the shipping date
+    shipping['Ship_Year'] = shipping['Ship_Date'].dt.year
+    shipping['Ship_Month'] = shipping['Ship_Date'].dt.month
+    shipping['Ship_Day'] = shipping['Ship_Date'].dt.day
+    # save the cleaned data
+    shipping.to_csv('data/processed/shipping_cleaned.csv', index=False)
 # Call the function to execute the cleaning process
-clean_data()
+clean_data() 
