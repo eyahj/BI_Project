@@ -148,6 +148,17 @@ def clean_data():
     # Save the cleaned data
     time.to_csv('data/processed/time_cleaned.csv', index=False)
 
+# 4--- Cleaning and transforming products data
+    # Remove duplicates
+    products = products.drop_duplicates()
+    # Handle missing values
+    products = handle_missing_data(products, 'products')
+
+    # Standardize text
+    products['Product_Name'] = products['Product_Name'].str.strip().str.title()
+    products['Category'] = products['Category'].str.strip().str.title()
+    products['Sub_Category'] = products['Sub_Category'].str.strip().str.title()
+
 
 # Call the function to execute the cleaning process
 clean_data() 
