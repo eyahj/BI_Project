@@ -173,7 +173,7 @@ def clean_data():
 # Print unique subcategories to check values
     print("Unique Subcategories:", products['Sub_Category'].unique())
 
-# 4--- Cleaning sales data
+# 4--- Cleaning and transforming sales data
 
     # Handle missing values
     sales = handle_missing_data(sales, 'sales')
@@ -186,7 +186,6 @@ def clean_data():
 
     # Ensure non-negative values
     sales['Sales'] = sales['Sales'].clip(lower=0)
-    sales['Profit'] = sales['Profit'].clip(lower=0)
     sales['Quantity'] = sales['Quantity'].clip(lower=0)
     sales['Discount'] = sales['Discount'].clip(lower=0)
 
