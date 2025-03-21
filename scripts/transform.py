@@ -149,16 +149,51 @@ def clean_data():
     time.to_csv('data/processed/time_cleaned.csv', index=False)
 
 # 4--- Cleaning and transforming products data
-    # Remove duplicates
+# Remove duplicates
     products = products.drop_duplicates()
-    # Handle missing values
+
+# Handle missing values
     products = handle_missing_data(products, 'products')
 
-    # Standardize text
+# Standardize text
     products['Product_Name'] = products['Product_Name'].str.strip().str.title()
     products['Category'] = products['Category'].str.strip().str.title()
     products['Sub_Category'] = products['Sub_Category'].str.strip().str.title()
 
+# ✅ Ensure only valid categories are used
+    valid_categories = ["Technology", "Furniture", "Office Supplies"]
+    products['Category'] = products['Category'].apply(lambda x: x if x in valid_categories else "Miscellaneous")
+
+# 🚨 Optionally, drop rows with invalid categories instead of assigning "Miscellaneous"
+    products = products[products['Category'].isin(valid_categories)]
+
+# ✅ Print unique values to confirm correctness
+    print("Unique Categories After Validation:", products['Category'].unique())
+
+# Print unique subcategories to check values
+    print("Unique Subcategories:", products['Sub_Category'].unique())
+
+# 4--- Cleaning sales data
+
+    # Handle missing values
+    sales = handle_missing_data(sales, 'sales')
+
+    # Validate numerical columns
+    sales['Sales'] = pd.to_numeric(sales['Sales'], errors='coerce')
+    sales['Profit'] = pd.to_numeric(sales['Profit'], errors='coerce')
+    sales['Quantity'] = pd.to_numeric(sales['Quantity'], errors='coerce')
+    sales['Discount'] = pd.to_numeric(sales['Discount'], errors='coerce')
+
+    # Ensure non-negative values
+    sales['Sales'] = sales['Sales'].clip(lower=0)
+    sales['Profit'] = sales['Profit'].clip(lower=0)
+    sales['Quantity'] = sales['Quantity'].clip(lower=0)
+    sales['Discount'] = sales['Discount'].clip(lower=0)
+
+    # Validate logical consistency (Profit <= Sales)
+    invalid_profit = sales[sales['Profit'] > sales['Sales']]
+    if not invalid_profit.empty:
+        print("Invalid Profit values found (Profit > Sales):", invalid_profit)
 
 # Call the function to execute the cleaning process
 clean_data() 
