@@ -176,7 +176,8 @@ def clean_data():
     products.to_csv('data/processed/products_cleaned.csv', index=False)
 
 # 4--- Cleaning and transforming sales data
-
+    # Handle duplicates
+    sales.drop_duplicates(inplace=True)
     # Handle missing values
     sales = handle_missing_data(sales, 'sales')
 
@@ -199,3 +200,4 @@ def clean_data():
     sales.to_csv('data/processed/sales_cleaned.csv', index=False)
 # Call the function to execute the cleaning process
 clean_data() 
+
