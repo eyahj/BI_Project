@@ -40,9 +40,12 @@ def clean_data():
         print(df.isnull().sum())
         return df
 
-    # ---- Data Cleaning ----
+    # ---- Data Cleaning and transformation ----
 
-    # 1--- cleaning customers data
+    # 1--- cleaning and transforming customers data
+    
+    # Remove duplicates
+    customers = customers.drop_duplicates()
     # Standardize text
     customers['Customer_Name'] = customers['Customer_Name'].str.title()
 
@@ -96,11 +99,16 @@ def clean_data():
     # Print the transformed DataFrame
     print(customers.head())
 
+    # Remove duplicates
+    customers = customers.drop_duplicates()
+
     # Optionally, save the cleaned data
     customers.to_csv('data/processed/customers_cleaned.csv', index=False)
 
-# 2--- cleaning shipping data
-# Convert 'Ship_Date' to datetime
+# 2--- cleaning and transforming shipping data
+    # Remove duplicates
+    shipping = shipping.drop_duplicates()
+    # Convert 'Ship_Date' to datetime
     shipping['Ship_Date'] = pd.to_datetime(shipping['Ship_Date'], format='%d-%m-%Y', errors='coerce')
 
         # Handle missing values
@@ -124,5 +132,8 @@ def clean_data():
     shipping['Ship_Day'] = shipping['Ship_Date'].dt.day
     # save the cleaned data
     shipping.to_csv('data/processed/shipping_cleaned.csv', index=False)
+
+
+
 # Call the function to execute the cleaning process
 clean_data() 
