@@ -43,7 +43,7 @@ def clean_data():
     # ---- Data Cleaning and transformation ----
 
     # 1--- cleaning and transforming customers data
-    
+
     # Remove duplicates
     customers = customers.drop_duplicates()
     # Standardize text
@@ -99,8 +99,6 @@ def clean_data():
     # Print the transformed DataFrame
     print(customers.head())
 
-    # Remove duplicates
-    customers = customers.drop_duplicates()
 
     # Optionally, save the cleaned data
     customers.to_csv('data/processed/customers_cleaned.csv', index=False)
@@ -133,6 +131,22 @@ def clean_data():
     # save the cleaned data
     shipping.to_csv('data/processed/shipping_cleaned.csv', index=False)
 
+# 3--- Cleaning and Transforming the Time Dimension
+
+    # Handle missing values
+    time = handle_missing_data(time, 'time')
+
+    # Convert 'OrderDate' to datetime format
+    time['OrderDate'] = pd.to_datetime(time['OrderDate'], errors='coerce')
+
+    # Ensure 'OrderYear' is correct and matches 'OrderDate'
+    time['OrderYear'] = time['OrderDate'].dt.year
+
+    # Handle duplicates: Drop duplicate TimeID or OrderDate
+    time.drop_duplicates(subset=['TimeID', 'OrderDate'], keep='first', inplace=True)
+
+    # Save the cleaned data
+    time.to_csv('data/processed/time_cleaned.csv', index=False)
 
 
 # Call the function to execute the cleaning process
