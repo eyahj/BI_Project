@@ -172,6 +172,8 @@ def clean_data():
 
 # Print unique subcategories to check values
     print("Unique Subcategories:", products['Sub_Category'].unique())
+# Save the cleaned data
+    products.to_csv('data/processed/products_cleaned.csv', index=False)
 
 # 4--- Cleaning and transforming sales data
 
@@ -193,6 +195,7 @@ def clean_data():
     invalid_profit = sales[sales['Profit'] > sales['Sales']]
     if not invalid_profit.empty:
         print("Invalid Profit values found (Profit > Sales):", invalid_profit)
-
+# Save the cleaned data
+    sales.to_csv('data/processed/sales_cleaned.csv', index=False)
 # Call the function to execute the cleaning process
 clean_data() 
