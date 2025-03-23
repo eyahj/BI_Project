@@ -160,14 +160,14 @@ def clean_data():
     products['Category'] = products['Category'].str.strip().str.title()
     products['Sub_Category'] = products['Sub_Category'].str.strip().str.title()
 
-# ✅ Ensure only valid categories are used
+# Ensure only valid categories are used
     valid_categories = ["Technology", "Furniture", "Office Supplies"]
     products['Category'] = products['Category'].apply(lambda x: x if x in valid_categories else "Miscellaneous")
 
-# 🚨 Optionally, drop rows with invalid categories instead of assigning "Miscellaneous"
+# Optionally, drop rows with invalid categories instead of assigning "Miscellaneous"
     products = products[products['Category'].isin(valid_categories)]
 
-# ✅ Print unique values to confirm correctness
+# Print unique values to confirm correctness
     print("Unique Categories After Validation:", products['Category'].unique())
 
 # Print unique subcategories to check values
@@ -199,5 +199,7 @@ def clean_data():
 # Save the cleaned data
     sales.to_csv('data/processed/sales_cleaned.csv', index=False)
 # Call the function to execute the cleaning process
+
+
 clean_data() 
 
