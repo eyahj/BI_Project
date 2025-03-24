@@ -1,5 +1,5 @@
 import pandas as pd
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine 
 
 def clean_data():
     # Database connection parameters
@@ -17,7 +17,6 @@ def clean_data():
     time = pd.read_sql('SELECT * FROM Staging_Time_Dim', engine)
     customers = pd.read_sql('SELECT * FROM Staging_Customer_Dim', engine)
     shipping = pd.read_sql('SELECT * FROM Staging_Shipping_Dim', engine)
-
     # Function to check and handle missing data
     def handle_missing_data(df, name):
         print(f"Missing values in {name}:")
