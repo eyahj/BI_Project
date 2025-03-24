@@ -191,7 +191,7 @@ def clean_data():
     sales['Quantity'] = sales['Quantity'].clip(lower=0)
     sales['Discount'] = sales['Discount'].clip(lower=0)
 
-    # Validate logical consistency (Profit <= Sales)
+    # Validate logical consistency (Profit <= Sales) 
     invalid_profit = sales[sales['Profit'] > sales['Sales']]
     if not invalid_profit.empty:
         print("Invalid Profit values found (Profit > Sales):", invalid_profit)
@@ -201,4 +201,3 @@ def clean_data():
 
 
 clean_data() 
-
