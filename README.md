@@ -1,7 +1,7 @@
 # Superstore Dataset Analysis and ETL with Python & Talend
 
 ## Project Overview
-This project focuses on analyzing the Superstore dataset to extract meaningful insights that can drive business decisions. The project involves an ETL (Extract, Transform, Load) pipeline implemented in 2 methods : once using Python and once using Talend, to gain skills in both sowtwares (note that the same transformations are done for both processes). The final output is a structured database that enables efficient analysis and reporting.
+This project focuses on analyzing the Superstore dataset to extract meaningful insights that can drive business decisions. The project involves an ETL (Extract, Transform, Load) pipeline implemented in 2 methods : once using Python and once using Talend, to gain skills in both softwares (note that the same transformations are done for both processes). The final output is a structured database that enables efficient analysis and reporting.
 
 ## Key Objectives
 
